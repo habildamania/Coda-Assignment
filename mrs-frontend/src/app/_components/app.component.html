@@ -1,0 +1,23 @@
+
+
+<!-- Custom It According to your Requirements -->
+<nav class="navbar navbar-dark bg-dark justify-content-between">
+  <a class="navbar-brand">Movie Review System</a>
+  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	<!--<li class="nav-item active">
+		<a class="nav-link" [routerLink]="['/login']">Login <span class="sr-only">(current)</span></a>
+  </li>-->
+  <li class="nav-item active">
+		<a class="nav-link" [routerLink]="['/logout']" (click)="logout()">Logout <span class="sr-only">(current)</span></a>
+	</li>
+  </ul>
+  <form *ngIf="authService.isLoggedIn()" class="form-inline">
+    <input class="form-control mr-sm-2" id="movie_search" type="search" placeholder="Search Movie" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" id="search_button" type="button">Search</button>
+  </form>
+</nav>
+
+
+<div class="container-fluid pl-4 pt-4 pr-4">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  .checked {
+    color: orange;
+  }
+  </style>
+<div class="row">
+  <div *ngFor="let movie of movies" class="col col-lg-3" style="padding-top: 20px;" (click)="showModel(movie.id);">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" id = "pic" src = {{movie.url}} alt="Card image cap">
+      <div class="card-body">
+        <h3 class="card-text">{{movie?.title}}</h3>
+        <p class="card-text">{{selectedMovie[0]?.genre}}</p>
+        <span class="fa fa-star " [ngClass]="{'checked': movie.aggregate >= 1}"></span>
+        <span class="fa fa-star" [ngClass]="{'checked': movie.aggregate >= 2}"></span>
+        <span class="fa fa-star" [ngClass]="{'checked': movie.aggregate >= 3}"></span>
+        <span class="fa fa-star" [ngClass]="{'checked': movie.aggregate >= 4}"></span>
+        <span class="fa fa-star" [ngClass]="{'checked': movie.aggregate >= 5}"></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div
+      class="modal"
+      id="Model"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+      style="overflow-y: auto; display: none;"
+
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              {{selectedMovie[0]?.title}} 
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              (click)="closeModel()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+         
+          <div class="modal-body">
+            <div class="container"> 
+              <img class="card-img-top" src= {{selectedMovie[0]?.url}} alt="Card image cap">
+              <div class="container" style="margin-top: 20px;">
+                <div class="row">Plot - {{selectedMovie[0]?.plot}} </div>
+                <div class="row">Cast - {{selectedMovie[0]?.cast}} </div>
+                <div class="row">Genre - {{selectedMovie[0]?.genre}} </div>
+                <div class="row"> 
+                  <span *ngIf="selectedMovie.length > 0" class="fa fa-star " (click) = "postRating(1);"[ngClass]="{'checked': userRating >= 1}"></span>
+                  <span *ngIf="selectedMovie.length > 0" class="fa fa-star" (click) = "postRating(2);"[ngClass]="{'checked': userRating >= 2}"></span>
+                  <span *ngIf="selectedMovie.length > 0" class="fa fa-star" (click) = "postRating(3);"[ngClass]="{'checked': userRating >= 3}"></span>
+                  <span *ngIf="selectedMovie.length > 0" class="fa fa-star" (click) = "postRating(4);"[ngClass]="{'checked': userRating >= 4}"></span>
+                  <span *ngIf="selectedMovie.length > 0" class="fa fa-star" (click) = "postRating(5);"[ngClass]="{'checked': userRating >= 5}"></span>
+                </div>
+              </div>
+             
+            <form style="margin-top: 10px;">
+              <div class="form-group">
+                <textarea [innerHtml]="comment" class="form-control" id="comment" rows="3"></textarea>
+              </div>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="postComment(selectedMovie[0])">Post</button>
+            </form>
+        </div>
+          </div>
+            <div class="modal-footer" style="justify-content: normal;">
+              <div class="row" *ngFor="let comment of comments" style="width: 100%;">
+                
+                <div class="col col-lg-3" style="padding-top: 10px;" >
+                  {{comment.username}}
+                </div>
+                <div class="col col-lg-7"  *ngIf="!comment.EditMode" style="padding-top: 10px;" >
+                  {{comment.text}}
+                </div>
+                <div class="col col-lg-7"  *ngIf="comment.EditMode" style="padding-top: 10px;" >
+                  <textarea [innerHtml]="comment.text" id="comment_update" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="col col-lg-1"  *ngIf="!comment.EditMode" (click)="comment.EditMode = true;" style="padding-top: 10px;" >
+                  <i class="fa fa-edit" style="font-size:24px"></i>
+                  
+              </div>
+              <div class="col col-lg-1"  *ngIf="!comment.EditMode" style="padding-top: 10px;" >
+                <i class="fa fa-trash" (click)="deleteComment(comment)" style="font-size:24px"></i>
+              </div>
+              <div class="col col-lg-2"  *ngIf="comment.EditMode" style="padding-top: 10px;" >
+                <i class="fa fa-check" (click)="updateComment(comment)" style="font-size:24px"></i>
+              </div>
+              </div>
+
+            </div> 
+        </div>
+      </div>
+    </div>
