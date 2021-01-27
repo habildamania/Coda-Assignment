@@ -1,4 +1,3 @@
-Angular Ready To Go Boilerplate by Brn.Rajoriya
 
 ** UI Features
 * Material And Bootstrap Configurations
